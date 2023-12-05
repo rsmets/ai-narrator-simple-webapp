@@ -19,25 +19,11 @@ app.get('/health', (req, res) => {
 });
 const httpServer = createServer(app);
 
-// const httpServer = createServer(app, (req, res) => {
-//   if (req.url === '/health') {
-//     res.writeHead(200);
-//     res.end('OK');
-//   }
-//   console.log('Received request for', req.url);
-// });
-
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
   },
 });
-
-// const io = new Server({
-//   cors: {
-//     origin: "*",
-//   },
-// });
 
 io.on("connection", (socket) => {
   console.log("🤝 A new client has connected");
@@ -73,5 +59,3 @@ io.on("connection", (socket) => {
 httpServer.listen(3000, '0.0.0.0', () => {
   console.log('Server is running on port 3000');
 });
-
-// io.listen(3000);
