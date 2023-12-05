@@ -1,7 +1,12 @@
 const { Server } = require("socket.io");
 
 const { createServer } = require("http");
-const httpServer = createServer();
+const httpServer = createServer((req, res) => {
+  if (req.url === '/health') {
+    res.writeHead(200);
+    res.end('OK');
+  }
+});
 
 const OpenAIVision = require("./visionAPI");
 const ElevenLabsVoice = require("./elevenLabs");
@@ -39,6 +44,10 @@ io.on("connection", (socket) => {
   });
   socket.on("disconnect", () => {
     console.log("👋 A client has disconnected");
+  });
+
+  socket.on('error', (error) => {
+    console.error('An error occurred:', error);
   });
 });
 
