@@ -41,8 +41,9 @@ const processQueue = () => {
 // END: Audio code
 
 // BEGIN: Socket.io code
-const socket = io("http://localhost:3000");
-
+const socket = io(
+  "https://ai-narrator-simple-webapp-server-rsmets.vercel.app:3000",
+);
 socket.on("connect", function () {
   console.log("Connected to server");
 });
