@@ -1,12 +1,15 @@
 const { Server } = require("socket.io");
 
+const { createServer } = require("http");
+const httpServer = createServer();
+
 const OpenAIVision = require("./visionAPI");
 const ElevenLabsVoice = require("./elevenLabs");
 
 const openAIVision = new OpenAIVision();
 const elevenLabsVoice = new ElevenLabsVoice();
 
-const io = new Server({
+const io = new Server(httpServer, {
   cors: {
     origin: "*",
   },
@@ -39,4 +42,4 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(3000);
+httpServer.listen(3000);
