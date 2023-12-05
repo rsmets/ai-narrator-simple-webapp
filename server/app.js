@@ -1,19 +1,31 @@
+const express = require('express');
 const { Server } = require("socket.io");
-
 const { createServer } = require("http");
-const httpServer = createServer((req, res) => {
-  if (req.url === '/health') {
-    res.writeHead(200);
-    res.end('OK');
-  }
-  console.log('Received request for', req.url);
-});
-
 const OpenAIVision = require("./visionAPI");
 const ElevenLabsVoice = require("./elevenLabs");
 
 const openAIVision = new OpenAIVision();
 const elevenLabsVoice = new ElevenLabsVoice();
+
+const app = express();
+
+app.use((req, res, next) => {
+  console.log('Received request for', req.path);
+  next();
+});
+
+app.get('/health', (req, res) => {
+  res.send('OK');
+});
+const httpServer = createServer(app);
+
+// const httpServer = createServer(app, (req, res) => {
+//   if (req.url === '/health') {
+//     res.writeHead(200);
+//     res.end('OK');
+//   }
+//   console.log('Received request for', req.url);
+// });
 
 const io = new Server(httpServer, {
   cors: {
