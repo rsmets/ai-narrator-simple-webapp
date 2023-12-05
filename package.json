@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start:server": "node --env-file .env server/app.js",
+    "start:server": "node --env-file /etc/secrets/.env server/app.js",
     "start:client": "npx http-server client"
   },
   "dependencies": {
