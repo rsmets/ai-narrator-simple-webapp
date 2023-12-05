@@ -14,7 +14,13 @@ const ElevenLabsVoice = require("./elevenLabs");
 const openAIVision = new OpenAIVision();
 const elevenLabsVoice = new ElevenLabsVoice();
 
-const io = new Server(httpServer, {
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: "*",
+//   },
+// });
+
+const io = new Server({
   cors: {
     origin: "*",
   },
@@ -51,6 +57,8 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(3000, '0.0.0.0', () => {
-  console.log('Server is running on port 3000');
-});
+// httpServer.listen(3000, '0.0.0.0', () => {
+//   console.log('Server is running on port 3000');
+// });
+
+io.listen(3000);
