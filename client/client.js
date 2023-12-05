@@ -42,7 +42,7 @@ const processQueue = () => {
 
 // BEGIN: Socket.io code
 const socket = io(
-  "https://ai-narrator-simple-webapp-server-rsmets.vercel.app:3000",
+  "wss://ai-narrator-simple-webapp-server-rsmets.vercel.app:3000",
 );
 socket.on("connect", function () {
   console.log("Connected to server");
