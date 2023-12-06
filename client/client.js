@@ -1,15 +1,17 @@
 // BEGIN: Webcam code
-navigator.mediaDevices
-  .getUserMedia({ video: true })
-  .then(function (stream) {
-    // Display the webcam feed
-    const video = document.getElementById("webcam");
-    video.srcObject = stream;
-    video.autoplay = true;
-  })
-  .catch(function (error) {
-    console.log("Error accessing webcam:", error);
-  });
+const startWebcam = () => {
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then(function (stream) {
+      // Display the webcam feed
+      const video = document.getElementById("webcam");
+      video.srcObject = stream;
+      video.play(); // Play the video manually
+    })
+    .catch(function (error) {
+      console.log("Error accessing webcam:", error);
+    });
+};
 // END: Webcam code
 
 // BEGIN: Audio code
@@ -42,8 +44,8 @@ const processQueue = () => {
 
 // BEGIN: Socket.io code
 const socket = io(
-  'wss://ai-narrator-simple-webapp-server.onrender.com'
-  // "ws://localhost:3000" // Uncomment to hit the local server
+  // 'wss://ai-narrator-simple-webapp-server.onrender.com'
+  "ws://localhost:3000" // Uncomment to hit the local server
 );
 socket.on("connect", function () {
   console.log("Connected to server");
@@ -124,6 +126,7 @@ const displayNarratorText = (text) => {
 
 const startNarrator = () => {
   console.log("🎙️ {Narrator} is starting");
+  startWebcam(); // Start the webcam when the narrator starts
   const imageDataURL = captureImage();
   sendImageToServer(imageDataURL);
   button.style.opacity = 0;
