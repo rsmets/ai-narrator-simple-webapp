@@ -1,12 +1,25 @@
+const express = require('express');
 const { Server } = require("socket.io");
-
+const { createServer } = require("http");
 const OpenAIVision = require("./visionAPI");
 const ElevenLabsVoice = require("./elevenLabs");
 
 const openAIVision = new OpenAIVision();
 const elevenLabsVoice = new ElevenLabsVoice();
 
-const io = new Server({
+const app = express();
+
+app.use((req, res, next) => {
+  console.log('Received request for', req.path);
+  next();
+});
+
+app.get('/health', (req, res) => {
+  res.send('OK');
+});
+const httpServer = createServer(app);
+
+const io = new Server(httpServer, {
   cors: {
     origin: "*",
   },
@@ -37,6 +50,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("👋 A client has disconnected");
   });
+
+  socket.on('error', (error) => {
+    console.error('An error occurred:', error);
+  });
 });
 
-io.listen(3000);
+httpServer.listen(3000, '0.0.0.0', () => {
+  console.log('Server is running on port 3000');
+});
