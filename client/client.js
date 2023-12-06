@@ -1,12 +1,13 @@
 // BEGIN: Webcam code
 const startWebcam = () => {
+  console.log("🎥 Starting webcam");
   navigator.mediaDevices
     .getUserMedia({ video: true })
     .then(function (stream) {
       // Display the webcam feed
       const video = document.getElementById("webcam");
       video.srcObject = stream;
-      video.play(); // Play the video manually
+      // video.play(); // Play the video manually
     })
     .catch(function (error) {
       console.log("Error accessing webcam:", error);
@@ -126,7 +127,6 @@ const displayNarratorText = (text) => {
 
 const startNarrator = () => {
   console.log("🎙️ {Narrator} is starting");
-  startWebcam(); // Start the webcam when the narrator starts
   const imageDataURL = captureImage();
   sendImageToServer(imageDataURL);
   button.style.opacity = 0;
@@ -137,5 +137,8 @@ const startNarrator = () => {
 };
 
 const button = document.getElementById("button");
+const buttonwc = document.getElementById("buttonwc");
 
 button.addEventListener("click", startNarrator);
+buttonwc.addEventListener("click", startWebcam);
+
