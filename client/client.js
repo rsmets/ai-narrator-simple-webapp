@@ -1,19 +1,47 @@
-// BEGIN: Webcam code
-const startWebcam = () => {
+// // BEGIN: Webcam code
+// const startWebcam = () => {
+//   console.log("🎥 Starting webcam");
+//   navigator.mediaDevices
+//     .getUserMedia({ video: true })
+//     .then(function (stream) {
+//       // Display the webcam feed
+//       const video = document.getElementById("webcam");
+//       video.srcObject = stream;
+//       // video.play(); // Play the video manually
+//     })
+//     .catch(function (error) {
+//       console.log("Error accessing webcam:", error);
+//     });
+// };
+// // END: Webcam code
+
+// In your JavaScript file
+document.getElementById('startWebcam').addEventListener('click', function() {
   console.log("🎥 Starting webcam");
-  navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then(function (stream) {
-      // Display the webcam feed
-      const video = document.getElementById("webcam");
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+      const video = document.getElementById('webcam');
       video.srcObject = stream;
-      // video.play(); // Play the video manually
     })
-    .catch(function (error) {
+    .then(function() {
+      const startWebcamButton = document.getElementById('startWebcam');
+
+      console.log("fade out web 🎥 button")
+      startWebcamButton.style.transition = 'opacity 1s';
+      startWebcamButton.style.opacity = 0;
+      startWebcamButton.style.display = 'none';
+      // Add the fadeOut class to the button
+      startWebcamButton.classList.add('fadeOut');
+      // // fade out the button
+      // setTimeout(() => {
+      //   startWebcamButton.style.opacity = 0;
+      //   startWebcamButton.style.display = 'none';
+      // }, 5000);
+    })
+    .catch(function(error) {
       console.log("Error accessing webcam:", error);
     });
-};
-// END: Webcam code
+});
 
 // BEGIN: Audio code
 const audio = document.getElementById("audioElement");
@@ -45,8 +73,8 @@ const processQueue = () => {
 
 // BEGIN: Socket.io code
 const socket = io(
-  'wss://ai-narrator-simple-webapp-server.onrender.com'
-  // "ws://localhost:3000" // Uncomment to hit the local server
+  // 'wss://ai-narrator-simple-webapp-server.onrender.com'
+  "ws://localhost:3000" // Uncomment to hit the local server
 );
 socket.on("connect", function () {
   console.log("Connected to server");
@@ -65,7 +93,13 @@ socket.on("narratorAudio", function (audioChunk) {
 });
 
 socket.on("narratorFinished", function () {
-  startNarrator();
+  const button = document.getElementById("button"); // Get the button element
+  button.style.opacity = 0; // Set the opacity to 0 (fully transparent)
+
+  // Use setTimeout to delay the fade-in effect
+  setTimeout(function () {
+    button.style.opacity = 1; // Set the opacity to 1 (fully visible)
+  }, 1000); // Adjust the delay time (in milliseconds) as needed
 });
 
 // END: Socket.io code
@@ -129,16 +163,13 @@ const startNarrator = () => {
   console.log("🎙️ {Narrator} is starting");
   const imageDataURL = captureImage();
   sendImageToServer(imageDataURL);
-  button.style.opacity = 0;
 
-  setTimeout(() => {
-    button.style.display = "none";
-  }, 300);
+  // Fade out the button
+  button.style.opacity = 0;
+  button.style.display = "block";
 };
 
 const button = document.getElementById("button");
-const buttonwc = document.getElementById("buttonwc");
 
 button.addEventListener("click", startNarrator);
-buttonwc.addEventListener("click", startWebcam);
 
