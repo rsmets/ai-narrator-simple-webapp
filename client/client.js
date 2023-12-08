@@ -64,7 +64,6 @@ socket.on("narratorAudio", function (audioChunk) {
 socket.on("narratorFinished", function () {
   const button = document.getElementById("button"); // Get the button element
   button.style.opacity = 0; // Set the opacity to 0 (fully transparent)
-  // button.style.display = "block"; // Set the display property to "block"
 
   // Use setTimeout to delay the fade-in effect
   setTimeout(function () {
@@ -135,7 +134,6 @@ const startNarrator = () => {
   sendImageToServer(imageDataURL);
 
   // Fade out the button
-  button.style.transition = "opacity 1s";
   button.style.opacity = 0;
   button.style.display = "block";
 };
