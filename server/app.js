@@ -45,6 +45,7 @@ io.on("connection", (socket) => {
       console.log("🎙️ {Narrator} has finished speaking");
     } catch (err) {
       console.error(err.message);
+      socket.emit("narratorFinished");
     }
   });
   socket.on("disconnect", () => {

@@ -62,7 +62,13 @@ socket.on("narratorAudio", function (audioChunk) {
 });
 
 socket.on("narratorFinished", function () {
-  startNarrator();
+  const button = document.getElementById("button"); // Get the button element
+  button.style.opacity = 0; // Set the opacity to 0 (fully transparent)
+
+  // Use setTimeout to delay the fade-in effect
+  setTimeout(function () {
+    button.style.opacity = 1; // Set the opacity to 1 (fully visible)
+  }, 1000); // Adjust the delay time (in milliseconds) as needed
 });
 
 // END: Socket.io code
@@ -126,11 +132,10 @@ const startNarrator = () => {
   console.log("🎙️ {Narrator} is starting");
   const imageDataURL = captureImage();
   sendImageToServer(imageDataURL);
-  button.style.opacity = 0;
 
-  setTimeout(() => {
-    button.style.display = "none";
-  }, 300);
+  // Fade out the button
+  button.style.opacity = 0;
+  button.style.display = "block";
 };
 
 const button = document.getElementById("button");
