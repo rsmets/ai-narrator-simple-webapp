@@ -164,18 +164,35 @@ const displayNarratorText = (text) => {
   paragraph.scrollTop = paragraph.scrollHeight;
 };
 
-const startNarrator = () => {
-  console.log("🎙️ {Narrator} is starting");
-  alert('hit start narrator')
-  const imageDataURL = captureImage();
-  sendImageToServer(imageDataURL);
+// const startNarrator = () => {
+//   console.log("🎙️ {Narrator} is starting");
+//   alert('hit start narrator')
+//   const imageDataURL = captureImage();
+//   sendImageToServer(imageDataURL);
 
-  // Fade out the button
-  button.style.opacity = 0;
-  button.style.display = "block";
-};
+//   // Fade out the button
+//   button.style.opacity = 0;
+//   button.style.display = "block";
+// };
 
-const button = document.getElementById("narrator");
+// const button = document.getElementById("narrator");
 
-button.addEventListener("click", startNarrator);
+// button.addEventListener("click", startNarrator);
 
+document.addEventListener('DOMContentLoaded', function() {
+  const startNarrator = () => {
+    console.log("🎙️ {Narrator} is starting");
+    alert('hit start narrator')
+    const imageDataURL = captureImage();
+    sendImageToServer(imageDataURL);
+
+    // Fade out the button
+    const button = document.getElementById("narrator");
+    button.style.opacity = 0;
+    button.style.display = "block";
+  };
+
+  const button = document.getElementById("narrator");
+
+  button.addEventListener("click", startNarrator);
+});
