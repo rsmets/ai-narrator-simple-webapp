@@ -25,6 +25,7 @@ document.getElementById('startWebcam').addEventListener('click', function() {
     })
     .then(function() {
       const startWebcamButton = document.getElementById('startWebcam');
+      const button = document.getElementById('narrator');
 
       console.log("fade out web 🎥 button")
       startWebcamButton.style.transition = 'opacity 1s';
@@ -32,6 +33,9 @@ document.getElementById('startWebcam').addEventListener('click', function() {
       startWebcamButton.style.display = 'none';
       // Add the fadeOut class to the button
       startWebcamButton.classList.add('fadeOut');
+
+      button.style.transition = 'opacity 1s';
+      button.style.opacity = 1;
       // // fade out the button
       // setTimeout(() => {
       //   startWebcamButton.style.opacity = 0;
@@ -93,7 +97,7 @@ socket.on("narratorAudio", function (audioChunk) {
 });
 
 socket.on("narratorFinished", function () {
-  const button = document.getElementById("button"); // Get the button element
+  const button = document.getElementById("narrator"); // Get the button element
   button.style.opacity = 0; // Set the opacity to 0 (fully transparent)
 
   // Use setTimeout to delay the fade-in effect
@@ -169,7 +173,7 @@ const startNarrator = () => {
   button.style.display = "block";
 };
 
-const button = document.getElementById("button");
+const button = document.getElementById("narrator");
 
 button.addEventListener("click", startNarrator);
 
