@@ -165,6 +165,7 @@ const displayNarratorText = (text) => {
 
 const startNarrator = () => {
   console.log("🎙️ {Narrator} is starting");
+  alert('hit start narrator')
   const imageDataURL = captureImage();
   sendImageToServer(imageDataURL);
 
