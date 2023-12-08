@@ -77,8 +77,8 @@ const processQueue = () => {
 
 // BEGIN: Socket.io code
 const socket = io(
-  // 'wss://ai-narrator-simple-webapp-server.onrender.com'
-  "ws://localhost:3000" // Uncomment to hit the local server
+  'wss://ai-narrator-simple-webapp-server.onrender.com'
+  // "ws://localhost:3000" // Uncomment to hit the local server
 );
 socket.on("connect", function () {
   console.log("Connected to server");
