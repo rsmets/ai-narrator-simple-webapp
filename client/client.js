@@ -18,6 +18,7 @@
 // In your JavaScript file
 document.getElementById('startWebcam').addEventListener('click', function() {
   console.log("🎥 Starting webcam");
+  alert('hit start webcam')
   navigator.mediaDevices.getUserMedia({ video: true })
     .then(function(stream) {
       const video = document.getElementById('webcam');
