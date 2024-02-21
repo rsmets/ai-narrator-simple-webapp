@@ -1,16 +1,52 @@
-// BEGIN: Webcam code
-navigator.mediaDevices
-  .getUserMedia({ video: true })
-  .then(function (stream) {
-    // Display the webcam feed
-    const video = document.getElementById("webcam");
-    video.srcObject = stream;
-    video.autoplay = true;
-  })
-  .catch(function (error) {
-    console.log("Error accessing webcam:", error);
-  });
-// END: Webcam code
+// // BEGIN: Webcam code
+// const startWebcam = () => {
+//   console.log("🎥 Starting webcam");
+//   navigator.mediaDevices
+//     .getUserMedia({ video: true })
+//     .then(function (stream) {
+//       // Display the webcam feed
+//       const video = document.getElementById("webcam");
+//       video.srcObject = stream;
+//       // video.play(); // Play the video manually
+//     })
+//     .catch(function (error) {
+//       console.log("Error accessing webcam:", error);
+//     });
+// };
+// // END: Webcam code
+
+// In your JavaScript file
+document.getElementById('startWebcam').addEventListener('click', function() {
+  console.log("🎥 Starting webcam");
+  // alert('hit start webcam')
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+      const video = document.getElementById('webcam');
+      video.srcObject = stream;
+    })
+    .then(function() {
+      const startWebcamButton = document.getElementById('startWebcam');
+      const button = document.getElementById('narrator');
+
+      console.log("fade out web 🎥 button")
+      startWebcamButton.style.transition = 'opacity 1s';
+      startWebcamButton.style.opacity = 0;
+      startWebcamButton.style.display = 'none';
+      // Add the fadeOut class to the button
+      startWebcamButton.classList.add('fadeOut');
+
+      button.style.transition = 'opacity 1s';
+      button.style.opacity = 1;
+      // // fade out the button
+      // setTimeout(() => {
+      //   startWebcamButton.style.opacity = 0;
+      //   startWebcamButton.style.display = 'none';
+      // }, 5000);
+    })
+    .catch(function(error) {
+      console.log("Error accessing webcam:", error);
+    });
+});
 
 // BEGIN: Audio code
 const audio = document.getElementById("audioElement");
@@ -62,7 +98,7 @@ socket.on("narratorAudio", function (audioChunk) {
 });
 
 socket.on("narratorFinished", function () {
-  const button = document.getElementById("button"); // Get the button element
+  const button = document.getElementById("narrator"); // Get the button element
   button.style.opacity = 0; // Set the opacity to 0 (fully transparent)
 
   // Use setTimeout to delay the fade-in effect
@@ -128,16 +164,35 @@ const displayNarratorText = (text) => {
   paragraph.scrollTop = paragraph.scrollHeight;
 };
 
-const startNarrator = () => {
-  console.log("🎙️ {Narrator} is starting");
-  const imageDataURL = captureImage();
-  sendImageToServer(imageDataURL);
+// const startNarrator = () => {
+//   console.log("🎙️ {Narrator} is starting");
+//   alert('hit start narrator')
+//   const imageDataURL = captureImage();
+//   sendImageToServer(imageDataURL);
 
-  // Fade out the button
-  button.style.opacity = 0;
-  button.style.display = "block";
-};
+//   // Fade out the button
+//   button.style.opacity = 0;
+//   button.style.display = "block";
+// };
 
-const button = document.getElementById("button");
+// const button = document.getElementById("narrator");
 
-button.addEventListener("click", startNarrator);
+// button.addEventListener("click", startNarrator);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const startNarrator = () => {
+    console.log("🎙️ {Narrator} is starting");
+    alert('hit start narrator')
+    const imageDataURL = captureImage();
+    sendImageToServer(imageDataURL);
+
+    // Fade out the button
+    const button = document.getElementById("narrator");
+    button.style.opacity = 0;
+    button.style.display = "block";
+  };
+
+  const button = document.getElementById("narrator");
+
+  button.addEventListener("click", startNarrator);
+});

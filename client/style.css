@@ -71,6 +71,7 @@ body {
   filter: blur(2px); */
 }
 button {
+  opacity: 1;
   z-index: 1;
   font-size: 3rem;
   color: #e1e1e1cd;
@@ -109,4 +110,12 @@ button:after {
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-duration: 400ms;
   transition-property: width, left;
+}
+
+#narrator {
+  opacity: 0;
+}
+
+#startWebcam {
+  opacity: 1;
 }
